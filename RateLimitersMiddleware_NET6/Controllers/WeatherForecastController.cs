@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RateLimitersMiddleware_NET6.Decorators;
 
 namespace RateLimitersMiddleware_NET6.Controllers
 {
@@ -8,9 +9,8 @@ namespace RateLimitersMiddleware_NET6.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -19,6 +19,7 @@ namespace RateLimitersMiddleware_NET6.Controllers
         }
 
         [HttpGet]
+        [LimitRequest(MaxRequests = 10, TimeWindow = 1)]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
