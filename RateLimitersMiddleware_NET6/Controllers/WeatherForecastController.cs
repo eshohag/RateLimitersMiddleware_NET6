@@ -19,7 +19,8 @@ namespace RateLimitersMiddleware_NET6.Controllers
         }
 
         [HttpGet]
-        [LimitRequest(MaxRequests = 10, TimeWindow = 1)]
+        //[LimitRequest]
+        [LimitRequest(MaxRequests =10, TimeWindow = 1)]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

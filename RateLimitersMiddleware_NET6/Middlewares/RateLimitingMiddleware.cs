@@ -10,7 +10,7 @@ namespace RateLimitersMiddleware_NET6.Middlewares
         private readonly RequestDelegate _next;
         private readonly IDistributedCache _cache;
 
-        public RateLimitingMiddleware(RequestDelegate next,IDistributedCache cache)
+        public RateLimitingMiddleware(RequestDelegate next, IDistributedCache cache)
         {
             this._next = next;
             this._cache = cache;
@@ -40,7 +40,6 @@ namespace RateLimitersMiddleware_NET6.Middlewares
             }
             await UpdateClientStatisticsAsync(key, rateLimitDecorator.MaxRequests);
             await _next(context);
-
         }
 
         /// <summary>
@@ -50,7 +49,6 @@ namespace RateLimitersMiddleware_NET6.Middlewares
         /// <returns></returns>
         private static string GenerateClientKey(HttpContext context)
          => $"{context.Request.Path}_{context.Connection.RemoteIpAddress}";
-
 
         /// <summary>
         /// Get the client statistics from caching
